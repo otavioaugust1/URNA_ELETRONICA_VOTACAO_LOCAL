@@ -23,7 +23,9 @@
     },
     "files": [
       "main.js",
-      "../index.html"
+      "index.html",
+      "preload.js",
+      "mesario.html"
     ],
     "win": {
       "target": "nsis",

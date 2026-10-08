@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do Mesário</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;
+  font-family:'Courier New',Courier,monospace;
+  background:linear-gradient(135deg,#fff176,#ffb74d 40%,#ef5350 75%,#ab47bc)}
+.card{width:100%;max-width:440px;background:#eceff1;border:6px solid #fff;border-radius:18px;
+  box-shadow:0 12px 40px #0006;overflow:hidden;font-family:system-ui,sans-serif}
+.topo{background:linear-gradient(90deg,#fff9c4,#fff,#c8e6c9);padding:14px 18px;font-weight:800;color:#1a1a3a;letter-spacing:.04em}
+.topo small{display:block;font-size:.65rem;color:#555;font-weight:400;text-transform:uppercase}
+.corpo{padding:20px}
+.status{white-space:pre-line;border-radius:10px;padding:18px;text-align:center;font-family:'Courier New',monospace;font-weight:bold;font-size:1.1rem;line-height:1.5;border:3px solid}
+.st-off{background:#eee;border-color:#999;color:#666}
+.st-vot{background:#fff8e1;border-color:#ff9800;color:#e65100}
+.st-trav{background:#e8f5e9;border-color:#2e7d32;color:#1b5e20}
+.total{margin-top:10px;text-align:center;font-size:.8rem;color:#555}
+label{display:block;margin:18px 0 4px;font-size:.8rem;color:#555}
+input{width:100%;padding:12px;font-family:'Courier New',monospace;font-size:1.2rem;border:2px solid #aaa;border-radius:6px}
+input:focus{outline:none;border-color:#2e7d32}
+button{width:100%;margin-top:14px;padding:14px;border:none;border-radius:8px;background:#00c853;color:#fff;
+  font-family:'Courier New',monospace;font-size:1.1rem;font-weight:bold;text-transform:uppercase;cursor:pointer}
+button:disabled{background:#aaa;cursor:not-allowed}
+#msg{margin-top:10px;text-align:center;font-size:.85rem;min-height:1.2em;font-weight:bold}
+.ok{color:#1b5e20}.erro{color:#b71c1c}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="topo"><small>Justiça Eleitoral</small>🧑‍⚖️ PAINEL DO MESÁRIO <span id="evento"></span></div>
+  <div class="corpo">
+    <div id="status" class="status st-off">Aguardando conexão com a urna…</div>
+    <div class="total" id="total"></div>
+    <label for="senha">Senha master</label>
+    <input type="password" id="senha" placeholder="••••••" autofocus>
+    <button id="btn" disabled>🔓 Liberar próximo eleitor</button>
+    <div id="msg"></div>
+    <div id="rede" style="margin-top:18px;font-size:.72rem;color:#555;text-align:center;display:none"></div>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let estado=null;
+function render(){
+  const st=$("status"), btn=$("btn");
+  if(!estado){ st.className="status st-off"; st.textContent="Aguardando conexão com a urna…\n(abra este painel pelo botão Mesário da urna)"; btn.disabled=true; return; }
+  $("evento").textContent=estado.titulo?"· "+estado.titulo:"";
+  $("total").textContent=estado.ativo?"Eleitores que já votaram: "+estado.total:"";
+  if(!estado.ativo){ st.className="status st-off"; st.textContent="Votação não iniciada ou encerrada."; btn.disabled=true; }
+  else if(estado.travado){ st.className="status st-trav"; st.textContent="✔ Voto registrado.\nUrna aguardando liberação."; btn.disabled=false; }
+  else { st.className="status st-vot"; st.textContent="⏳ Eleitor votando…"; btn.disabled=true; }
+}
+const REDE=location.protocol.startsWith("http");
+function mostrar(r){
+  const m=$("msg");
+  m.className=r.ok?"ok":"erro";
+  m.textContent=r.ok?"Urna liberada para o próximo eleitor!":r.msg;
+  if(r.ok) $("senha").value="";
+  setTimeout(()=>m.textContent="",3500);
+}
+async function atualizar(){
+  try{
+    const r=await fetch("/estado",{cache:"no-store"});
+    estado=await r.json();
+  }catch(e){ estado=null; }
+  render();
+}
+async function liberarRede(){
+  try{
+    const r=await fetch("/liberar",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({senha:$("senha").value})});
+    mostrar(await r.json());
+  }catch(e){ mostrar({ok:false,msg:"Sem conexão com a urna."}); }
+  atualizar();
+}
+function liberar(){
+  if(REDE) return liberarRede();
+  if(!window.opener){ $("msg").className="erro"; $("msg").textContent="Sem conexão com a urna."; return; }
+  window.opener.postMessage({tipo:"liberar",senha:$("senha").value},"*");
+}
+$("btn").addEventListener("click",liberar);
+$("senha").addEventListener("keydown",e=>{ if(e.key==="Enter"&&!$("btn").disabled) liberar(); });
+window.addEventListener("message",e=>{
+  if(e.source!==window.opener||!e.data) return;
+  if(e.data.tipo==="estado"){ estado=e.data; render(); }
+  if(e.data.tipo==="resposta"){
+    mostrar(e.data);
+  }
+});
+render();
+if(REDE){
+  atualizar(); setInterval(atualizar,1000);
+  fetch("/enderecos").then(r=>r.json()).then(l=>{
+    if(!l.length) return;
+    $("rede").style.display="block";
+    $("rede").innerHTML="Acesso por outro computador da rede:<br><b>"+l.join("<br>")+"</b>";
+  }).catch(()=>{});
+}
+</script>
+</body>
+</html>

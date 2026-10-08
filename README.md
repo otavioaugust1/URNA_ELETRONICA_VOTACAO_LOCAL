@@ -1,16 +1,14 @@
 # 🌽 Urna Eletrônica — Sistema de Votação para Festas e Eventos
 
-> Réplica visual da urna eletrônica brasileira desenvolvida para uso recreativo em festas juninas, escolhas de síndico, representante de sala e eventos similares.
-
-![preview](docs/preview.png)
+> Réplica visual da urna eletrônica brasileira para uso recreativo em festas juninas, escolha de síndico, representante de sala e eventos similares.
 
 ---
 
 ## ✨ O que é isso?
 
-Um sistema de votação eletrônica inspirado na **urna eletrônica do TSE (Tribunal Superior Eleitoral)**, desenvolvida pela Diebold Nixdorf e usada no Brasil desde 1996. O visual replica fielmente o equipamento real: corpo cinza, tela LCD à esquerda, teclado numérico à direita, com os botões **BRANCO** (branco), **CORRIGE** (laranja) e **CONFIRMA** (verde).
+Um sistema de votação inspirado na urna eletrônica brasileira: tela à esquerda, teclado numérico à direita e os botões **BRANCO**, **CORRIGE** e **CONFIRMA**. A urna ocupa toda a janela, com fundo colorido e sons parecidos com os da urna real.
 
-É um projeto de **passatempo e aprendizado**, sem qualquer vínculo com o TSE ou com processos eleitorais oficiais. O código é aberto e livre para adaptação.
+É um projeto de **passatempo e aprendizado**, sem vínculo com o TSE ou com processos eleitorais oficiais.
 
 ---
 
@@ -18,146 +16,140 @@ Um sistema de votação eletrônica inspirado na **urna eletrônica do TSE (Trib
 
 | Recurso | Descrição |
 |---|---|
-| 🎨 Visual fiel | Layout idêntico à urna Diebold: tela + teclado lado a lado |
-| ⚙️ Configurável | Nome do evento, cargos (Rei, Rainha, Síndico…) e candidatos ajustáveis |
+| 🖥️ Tela cheia e responsiva | A urna ocupa o máximo da janela e as fontes e teclas escalam com o tamanho da tela. O app desktop abre maximizado |
+| 🎨 Visual colorido | Fundo de festa, tela clara com número em caixas, teclas pretas e botões branco, laranja e verde |
+| 🔊 Sons | Bipe a cada tecla, buzzer de erro, confirmação a cada cargo e o **"tiririm"** ao finalizar o voto. Sons gerados no navegador, sem arquivos externos |
+| 🙋 Um voto por eleitor | O eleitor vota em todos os cargos em sequência. Ao terminar, a urna **trava** com a tela "FIM" |
+| 🔓 Liberação pelo mesário | Para o próximo eleitor votar, o administrador digita a **senha master** em um pop-up (botão na tela ou Enter) |
+| ⚪ Branco e ⚫ Nulo | BRANCO mostra "VOTO EM BRANCO". Número inexistente mostra "VOTO NULO". Os dois exigem **CONFIRMA** para registrar |
+| 🧑‍⚖️ Painel do mesário | Página `mesario.html` para liberar o próximo eleitor. No app desktop funciona **em outro computador da mesma rede** |
+| 👥 Lista de candidatos | Botão **Candidatos** no topo mostra cargos, fotos, números e nomes |
+| ⚙️ Configuração em tela cheia | A tela de iniciar a votação é maximizada, com cargos e candidatos em colunas, para facilitar a digitação |
 | 📷 Fotos | Upload de foto do titular e do vice/chapa |
-| 🔒 Senha dupla | Botões **INICIAR** e **FINALIZAR** protegidos por senha |
-| 📋 Zerésima | Boletim de urna emitido na abertura, comprovando zero votos |
-| 🔀 Anonimato | Votos embaralhados (Fisher-Yates) a cada registro — impossível saber quem votou em quem |
-| 📊 Resultado | Boletim final com votos por candidato, % de votos válidos, brancos e vencedor |
-| ⌨️ Teclado físico | Números 0–9, Enter = CONFIRMA, Backspace = CORRIGE, B = BRANCO |
-| 🌐 Zero dependências | Um único arquivo HTML — roda em qualquer navegador |
-| 💻 App Desktop | Versão `.exe` / `.app` via Electron para uso sem navegador |
+| 📋 Zerésima | Boletim emitido na abertura, comprovando zero votos |
+| 🔀 Anonimato | Votos embaralhados (Fisher-Yates) a cada registro |
+| 📊 Resultado | Boletim final com votos por candidato, % de votos válidos, brancos, nulos e vencedor |
+| 🖨️ Impressão A4 | Imprime **só o boletim** (sem a urna nem o fundo), em A4 retrato, com a mesma fonte da tela |
+| 🌐 Sem dependências | A urna é um único `index.html` e funciona offline em qualquer navegador |
+| 💻 App desktop | Versão `.exe`, `.dmg` ou `.AppImage` via Electron |
+
+---
+
+## ⌨️ Teclas
+
+| Ação | Tela | Teclado do computador |
+|---|---|---|
+| Digitar número | Teclas 0–9 | `0`–`9` (linha de cima ou numérico) |
+| **CORRIGE** | Botão laranja | `+` (ou `Backspace`) |
+| **BRANCO** | Botão branco | `-` |
+| **CONFIRMA** | Botão verde | `Enter` |
+
+Com a urna travada (tela "FIM"), `Enter` abre o pop-up da senha master.
+
+---
+
+## 🔄 Fluxo de uso
+
+1. O administrador clica em **▶ Iniciar**, digita a senha, preenche evento, dígitos, cargos e candidatos e confirma. É emitida a **zerésima**.
+2. O eleitor digita o número, confere o candidato na tela e aperta **CONFIRMA**. O mesmo vale para **BRANCO** e **NULO**.
+3. Depois do último cargo toca o *tiririm*, aparece "FIM" e a urna **trava**.
+4. O mesário clica em **Liberar próximo** (ou Enter), digita a senha master e o próximo eleitor pode votar.
+5. No fim, **■ Finalizar** pede a senha, toca a música de encerramento e mostra o **boletim final**, que pode ser impresso em A4.
+
+---
+
+## 🧑‍⚖️ Mesário em outro computador (mesma rede)
+
+Disponível no **app desktop** (`npm start` ou o executável):
+
+1. Abra a urna e clique em **🧑‍⚖️ Mesário**. Aparecem os endereços, por exemplo `http://192.168.0.10:3737`.
+2. No outro computador, abra esse endereço no navegador.
+3. O painel mostra se o eleitor está votando ou se a urna aguarda liberação. Com a senha master, o mesário libera o próximo eleitor.
+
+Notas: o firewall do computador da urna precisa permitir a porta **3737**. A senha é conferida na urna, e após 5 erros seguidos o painel bloqueia por 30 segundos. Abrindo só o `index.html` no navegador, o botão Mesário abre o painel em uma janela do mesmo computador.
 
 ---
 
 ## 🚀 Como usar
 
-### Opção 1 — GitHub Pages (recomendado para eventos online)
+### Opção 1 — Arquivo local
+Abra `index.html` no navegador. Funciona offline. O navegador só libera o som após o primeiro clique ou tecla.
 
-1. Faça um fork deste repositório
-2. Vá em **Settings → Pages → Branch: main → / (root)**
-3. Acesse `https://seu-usuario.github.io/urna`
+### Opção 2 — GitHub Pages
+**Settings → Pages → Branch: main → / (root)**.
 
-### Opção 2 — Arquivo local
-
-Baixe `index.html` e abra diretamente no navegador. Funciona offline, sem servidor.
-
-### Opção 3 — App Desktop (.exe / .app)
-
-Veja a pasta [`electron/`](electron/) e siga o [guia de instalação](#-instalando-o-app-desktop).
-
----
-
-## 🖥️ Instalando o App Desktop
-
-> Para quem prefere um executável sem precisar abrir navegador.
-
-### Pré-requisitos
-
-- [Node.js](https://nodejs.org) 18 ou superior
-
-### Passos
+### Opção 3 — App desktop
 
 ```bash
-# Clone o repositório
-git clone https://github.com/SEU_USUARIO/urna-eletronica.git
-cd urna-eletronica/electron
-
-# Instale as dependências
 npm install
+npm start              # modo desenvolvimento
 
-# Rode em modo desenvolvimento
-npm start
-
-# Gere o executável para Windows (.exe)
-npm run build-win
-
-# Gere para macOS (.dmg)
-npm run build-mac
-
-# Gere para Linux (.AppImage)
-npm run build-linux
+npm run build-win      # Windows (.exe)
+npm run build-mac      # macOS (.dmg)
+npm run build-linux    # Linux (.AppImage)
 ```
 
-O executável gerado fica em `electron/dist/`.
+O executável fica em `dist/`. Mais detalhes em [COMO_GERAR_EXE.md](COMO_GERAR_EXE.md).
 
 ---
 
-## ⚙️ Configuração Rápida
+## ⚙️ Configuração
 
-### Senha padrão
+### Senha
+
+A mesma senha vale para iniciar, finalizar e liberar o próximo eleitor. Padrão:
 
 ```
 131313
 ```
 
-> Para trocar, edite a linha no `index.html`:
-> ```js
-> const SENHA = "131313";
-> ```
+Para trocar, edite no `index.html`:
 
-### Tipos de cargo sugeridos
+```js
+const SENHA = "131313";
+```
 
-Você pode nomear os cargos como quiser na tela de configuração:
+### Impressão do boletim
 
-- 🌽 Rei e Rainha do Milho
-- 🏢 Síndico do Condomínio
-- 🎓 Representante de Sala / Turma
-- 🏆 MVP da Equipe
-- 🎉 Melhor Fantasia da Festa
+No resultado, clique em **🖨 Imprimir** e escolha papel **A4**. A página sai só com o boletim, sem a urna. Se as barras de porcentagem saírem sem cor, ative "Gráficos de segundo plano" nas opções de impressão do navegador.
 
 ---
 
-## 🔐 Segurança e Privacidade
+## 🔐 Segurança e privacidade
 
-- **Nenhum dado é enviado para servidores** — tudo roda localmente no navegador.
-- Os votos são embaralhados com o algoritmo Fisher-Yates a cada registro, impedindo rastrear quem votou em quem.
-- O hash no Boletim de Urna serve apenas para identificação do arquivo de resultado.
-
----
-
-## 💡 Inspiração técnica
-
-A urna eletrônica brasileira é referência mundial em segurança e usabilidade. Desenvolvida originalmente pela **Diebold Nixdorf** em parceria com o TSE, ela foi introduzida em 1996 e desde 2008 é 100% fabricada no Brasil. O design do teclado com as três cores — branco, laranja e verde — para as ações primárias é um dos elementos mais reconhecíveis do processo eleitoral brasileiro.
-
-Este projeto usa apenas HTML + CSS + JavaScript vanilla, sem frameworks, respeitando o espírito de acessibilidade e simplicidade do equipamento original.
+- Nenhum dado vai para a internet. A única comunicação de rede é o painel do mesário (porta 3737, só na rede local), e só no app desktop.
+- Os votos são embaralhados a cada registro para dificultar saber quem votou em quem.
+- O hash do boletim serve apenas para identificar o arquivo de resultado.
+- A senha fica no código-fonte; é adequada para eventos recreativos, não para eleições reais.
 
 ---
 
-## 📁 Estrutura do Repositório
+## 📁 Estrutura
 
 ```
-urna-eletronica/
-├── index.html          ← app completo (abrir no navegador ou GitHub Pages)
-├── README.md
-├── docs/
-│   └── preview.png     ← screenshot para o README
-└── electron/
-    ├── main.js         ← processo principal Electron
-    ├── package.json    ← dependências e scripts de build
-    └── (index.html é copiado automaticamente pelo build)
+├── index.html          ← app completo
+├── main.js             ← processo principal do Electron (janela maximizada e servidor do mesário)
+├── preload.js          ← ponte segura entre a urna e o Electron
+├── mesario.html        ← painel do mesário
+├── package.json        ← scripts e configuração de build
+├── COMO_GERAR_EXE.md   ← guia para gerar o executável
+└── README.md
 ```
 
 ---
 
-## 🤝 Contribuindo
+## 🤝 Ideias futuras
 
-Pull requests são bem-vindos! Sugestões de melhoria:
-
-- [ ] Modo escuro / claro
-- [ ] Suporte a mais de 5 dígitos
 - [ ] Exportar resultado em PDF
-- [ ] Som de confirmação (como na urna real)
-- [ ] QR Code para votação remota
+- [ ] Senha master separada da senha do administrador
+- [ ] Salvar a configuração de cargos e candidatos para reutilizar
+- [ ] Modo escuro
 
 ---
 
 ## 📄 Licença
 
-MIT — use, modifique e distribua à vontade, desde que mantenha os créditos.
+MIT — use, modifique e distribua à vontade, mantendo os créditos.
 
----
-
-*Desenvolvido por Otávio Augusto · Brasília, 2025*
-*Inspirado no sistema eleitoral brasileiro — sem vínculo com TSE ou órgãos públicos.*
+*Desenvolvido por Otávio Augusto · Brasília*
+*Inspirado no sistema eleitoral brasileiro — sem vínculo com o TSE ou órgãos públicos.*

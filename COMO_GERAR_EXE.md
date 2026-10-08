@@ -1,49 +1,83 @@
-# 🖥️ Guia — Gerar o Executável (.exe / .app)
+# 🖥️ Guia — Gerar o Executável (.exe / .dmg / .AppImage)
+
+O app desktop usa Electron. Ele abre a urna maximizada, sem navegador, e habilita o **painel do mesário em outro computador da rede**.
 
 ## Pré-requisito
 
-Instale o **Node.js** (versão 18 ou superior):
-👉 https://nodejs.org/pt
+Instale o **Node.js** (versão 18 ou superior): https://nodejs.org/pt
 
 ---
 
 ## Passo a passo
 
-```bash
-# 1. Acesse a pasta electron
-cd urna-eletronica/electron
+Rode os comandos na pasta raiz do projeto, onde estão o `package.json` e o `main.js`.
 
-# 2. Instale as dependências (só na primeira vez)
+```bash
+# 1. Instale as dependências (só na primeira vez)
 npm install
 
-# 3. Teste rodando em modo desenvolvimento
+# 2. Teste em modo desenvolvimento
 npm start
 
-# 4. Gere o instalador
-npm run build-win      # Windows → .exe instalador
+# 3. Gere o instalador
+npm run build-win      # Windows → instalador .exe
 npm run build-mac      # macOS   → .dmg
 npm run build-linux    # Linux   → .AppImage
 ```
 
-O arquivo gerado fica em `electron/dist/`.
+O arquivo gerado fica na pasta `dist/`.
+
+> Gere o instalador no sistema de destino: o `.exe` no Windows, o `.dmg` no macOS e o `.AppImage` no Linux.
+
+---
+
+## Arquivos incluídos no build
+
+| Arquivo | Função |
+|---|---|
+| `main.js` | Janela da urna (maximizada) e servidor do painel do mesário |
+| `preload.js` | Ponte segura entre a urna e o Electron |
+| `index.html` | A urna |
+| `mesario.html` | Painel do mesário |
+
+Se você renomear ou adicionar arquivos, atualize a lista `build.files` do `package.json`.
 
 ---
 
 ## Ícone personalizado (opcional)
 
-Coloque os arquivos na pasta `electron/`:
+Coloque na pasta raiz:
 - `icon.ico` — Windows
-- `icon.icns` — macOS  
+- `icon.icns` — macOS
 - `icon.png` — Linux (256×256 px)
+
+---
+
+## Mesário em outro computador
+
+1. Abra o app da urna e clique em **🧑‍⚖️ Mesário**. Aparecem os endereços, por exemplo `http://192.168.0.10:3737`.
+2. No outro computador, na mesma rede, abra o endereço no navegador.
+3. Digite a senha master para liberar o próximo eleitor.
+
+**Firewall:** o computador da urna precisa permitir conexões de entrada na porta **3737**. No Windows, aceite o aviso do firewall na primeira execução (rede privada) ou crie uma regra de entrada para a porta TCP 3737.
 
 ---
 
 ## Resultado esperado
 
 ```
-electron/
-└── dist/
-    └── Urna Eletrônica Setup 1.0.0.exe   ← instalador Windows
+dist/
+└── Urna Eletrônica Setup 1.0.0.exe   ← instalador Windows
 ```
 
-Ao instalar, o programa abre diretamente na tela da urna, sem necessidade de navegador.
+Ao instalar, o programa abre direto na tela da urna, sem necessidade de navegador.
+
+---
+
+## Problemas comuns
+
+| Problema | Solução |
+|---|---|
+| O painel não abre no outro PC | Confira se os dois estão na mesma rede e se a porta 3737 está liberada no firewall |
+| Nenhum endereço aparece no botão Mesário | O PC da urna não está conectado a uma rede. Use o IP dele manualmente: `http://IP:3737` |
+| Sem som | Clique ou digite uma tecla uma vez; o som só é liberado depois da primeira interação |
