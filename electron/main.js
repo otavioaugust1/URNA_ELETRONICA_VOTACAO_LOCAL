@@ -86,7 +86,7 @@ function iniciarServidor() {
           return json(res, 429, { ok: false, msg: 'Muitas tentativas. Aguarde alguns segundos.' });
         }
         let senha = '';
-        try { senha = String(JSON.parse(corpo).senha || ''); } catch (e) {}
+        try { senha = String(JSON.parse(corpo).senha || ''); } catch (e) { }
         if (!mainWindow) return json(res, 503, { ok: false, msg: 'Urna indisponível.' });
         const id = ++seq;
         const timer = setTimeout(() => {

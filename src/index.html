@@ -1,177 +1,192 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Urna Eletrônica 🌽</title>
-<link rel="stylesheet" href="css/urna.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urna Eletrônica 🌽</title>
+  <link rel="stylesheet" href="css/urna.css">
 </head>
+
 <body>
 
-<!-- BANNER -->
-<div id="banner-top">
-  <div class="evento">🌽 <span>Votação da Festa Junina</span> — Sistema de Urna Eletrônica</div>
-  <div class="btns-admin">
-    <button class="btn-admin" id="btn-mesario" style="background:#6a1b9a;color:#fff">🧑‍⚖️ Mesário</button>
-    <button class="btn-admin" id="btn-candidatos">👥 Candidatos</button>
-    <button class="btn-admin" id="btn-iniciar">▶ Iniciar</button>
-    <button class="btn-admin" id="btn-finalizar">■ Finalizar</button>
-  </div>
-</div>
-
-<!-- CORPO DA URNA -->
-<div id="urna">
-  <!-- cabeçalho -->
-  <div id="cab-urna">
-    <div class="logo-je">
-      <!-- brasão SVG simplificado -->
-      <svg class="brasao-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="40" cy="40" r="38" fill="#1a3a6e" stroke="#d4af37" stroke-width="3"/>
-        <polygon points="40,12 47,33 70,33 52,46 59,67 40,54 21,67 28,46 10,33 33,33" fill="#d4af37"/>
-        <circle cx="40" cy="40" r="10" fill="#1a3a6e" stroke="#d4af37" stroke-width="1.5"/>
-        <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#fff" font-family="serif">BR</text>
-      </svg>
-      <div class="je-texto">
-        <div class="linha1">Sistema Eletrônico de Votação</div>
-        <div class="linha2">Inspirado na Justiça Eleitoral</div>
-      </div>
-    </div>
-    <div class="urna-serial">
-      SN: <span id="serial-num">--------</span><br>
-      <span id="data-urna">--/--/----</span>
+  <!-- BANNER -->
+  <div id="banner-top">
+    <div class="evento">🌽 <span>Votação da Festa Junina</span> — Sistema de Urna Eletrônica</div>
+    <div class="btns-admin">
+      <button class="btn-admin" id="btn-mesario" style="background:#6a1b9a;color:#fff">🧑‍⚖️ Mesário</button>
+      <button class="btn-admin" id="btn-candidatos">👥 Candidatos</button>
+      <button class="btn-admin" id="btn-iniciar">▶ Iniciar</button>
+      <button class="btn-admin" id="btn-finalizar">■ Finalizar</button>
     </div>
   </div>
 
-  <!-- grade tela + teclado -->
-  <div id="corpo-urna">
-
-    <!-- PAINEL ESQUERDO: TELA -->
-    <div id="painel-tela">
-      <div id="display">
-        <div id="display-conteudo">
-          <!-- renderizado por JS -->
+  <!-- CORPO DA URNA -->
+  <div id="urna">
+    <!-- cabeçalho -->
+    <div id="cab-urna">
+      <div class="logo-je">
+        <!-- brasão SVG simplificado -->
+        <svg class="brasao-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="38" fill="#1a3a6e" stroke="#d4af37" stroke-width="3" />
+          <polygon points="40,12 47,33 70,33 52,46 59,67 40,54 21,67 28,46 10,33 33,33" fill="#d4af37" />
+          <circle cx="40" cy="40" r="10" fill="#1a3a6e" stroke="#d4af37" stroke-width="1.5" />
+          <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#fff"
+            font-family="serif">BR</text>
+        </svg>
+        <div class="je-texto">
+          <div class="linha1">Sistema Eletrônico de Votação</div>
+          <div class="linha2">Inspirado na Justiça Eleitoral</div>
         </div>
       </div>
-      <div id="barra-cargo">
-        <!-- cargos renderizados por JS -->
+      <div class="urna-serial">
+        SN: <span id="serial-num">--------</span><br>
+        <span id="data-urna">--/--/----</span>
       </div>
     </div>
 
-    <!-- PAINEL DIREITO: TECLADO -->
-    <div id="painel-teclado">
-      <div class="teclado-header">
-        <svg width="18" height="18" viewBox="0 0 80 80"><circle cx="40" cy="40" r="38" fill="#1a3a6e"/><polygon points="40,12 47,33 70,33 52,46 59,67 40,54 21,67 28,46 10,33 33,33" fill="#d4af37"/></svg>
-        URNA ELETRÔNICA
+    <!-- grade tela + teclado -->
+    <div id="corpo-urna">
+
+      <!-- PAINEL ESQUERDO: TELA -->
+      <div id="painel-tela">
+        <div id="display">
+          <div id="display-conteudo">
+            <!-- renderizado por JS -->
+          </div>
+        </div>
+        <div id="barra-cargo">
+          <!-- cargos renderizados por JS -->
+        </div>
       </div>
-      <div class="grid-num">
-        <button class="tecla" data-n="1">1</button>
-        <button class="tecla" data-n="2">2</button>
-        <button class="tecla" data-n="3">3</button>
-        <button class="tecla" data-n="4">4</button>
-        <button class="tecla" data-n="5">5</button>
-        <button class="tecla" data-n="6">6</button>
-        <button class="tecla" data-n="7">7</button>
-        <button class="tecla" data-n="8">8</button>
-        <button class="tecla" data-n="9">9</button>
-        <!-- 0 centralizado -->
-        <div></div>
-        <button class="tecla tecla-zero" data-n="0">0</button>
-        <div></div>
+
+      <!-- PAINEL DIREITO: TECLADO -->
+      <div id="painel-teclado">
+        <div class="teclado-header">
+          <svg width="18" height="18" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="38" fill="#1a3a6e" />
+            <polygon points="40,12 47,33 70,33 52,46 59,67 40,54 21,67 28,46 10,33 33,33" fill="#d4af37" />
+          </svg>
+          URNA ELETRÔNICA
+        </div>
+        <div class="grid-num">
+          <button class="tecla" data-n="1">1</button>
+          <button class="tecla" data-n="2">2</button>
+          <button class="tecla" data-n="3">3</button>
+          <button class="tecla" data-n="4">4</button>
+          <button class="tecla" data-n="5">5</button>
+          <button class="tecla" data-n="6">6</button>
+          <button class="tecla" data-n="7">7</button>
+          <button class="tecla" data-n="8">8</button>
+          <button class="tecla" data-n="9">9</button>
+          <!-- 0 centralizado -->
+          <div></div>
+          <button class="tecla tecla-zero" data-n="0">0</button>
+          <div></div>
+        </div>
+        <div class="linha-acao">
+          <button class="tecla-acao t-branco" id="btn-branco">BRANCO<br>( − )</button>
+          <button class="tecla-acao t-corrige" id="btn-corrige">CORRIGE<br>( + )</button>
+          <button class="tecla-acao t-confirma" id="btn-confirma">CONFIRMA</button>
+        </div>
       </div>
-      <div class="linha-acao">
-        <button class="tecla-acao t-branco" id="btn-branco">BRANCO<br>( − )</button>
-        <button class="tecla-acao t-corrige" id="btn-corrige">CORRIGE<br>( + )</button>
-        <button class="tecla-acao t-confirma" id="btn-confirma">CONFIRMA</button>
+
+    </div><!-- /corpo-urna -->
+
+    <!-- rodapé estética (ranhuras) -->
+    <div id="rodape-urna">
+      <div class="ranhura"></div>
+      <div class="ranhura"></div>
+      <div class="ranhura"></div>
+      <div class="ranhura"></div>
+      <div class="ranhura"></div>
+      <div class="ranhura"></div>
+      <div class="ranhura"></div>
+      <div class="ranhura"></div>
+    </div>
+  </div><!-- /urna -->
+
+  <!-- flash voto confirmado -->
+  <div id="flash-voto">
+    <div class="ico">✅</div>
+    <div class="msg">VOTO COMPUTADO</div>
+  </div>
+
+  <!-- ===== MODAL INICIAR ===== -->
+  <div class="overlay" id="ov-iniciar">
+    <div class="modal modal-cfg">
+      <h2>▶ Iniciar Votação</h2>
+      <div class="cfg-topo">
+        <div><label>Senha do Administrador</label>
+          <input type="password" id="inp-senha-ini" placeholder="••••••">
+        </div>
+        <div><label>Nome do Evento (aparece no topo)</label>
+          <input type="text" id="inp-titulo" value="Rei e Rainha do Milho 2025">
+        </div>
+        <div><label>Dígitos por número (2 a 5)</label>
+          <input type="number" id="inp-digitos" value="2" min="2" max="5">
+        </div>
+      </div>
+      <hr style="margin-top:14px;border-color:#dde">
+      <div id="cargos-form" class="cargos-grid"></div>
+      <button class="bm bm-ok" id="btn-add-cargo" style="width:100%;margin-top:10px">+ Adicionar Cargo</button>
+      <div class="linha-btns">
+        <button class="bm bm-cancel" id="btn-cancel-ini">Cancelar</button>
+        <button class="bm bm-ok" id="btn-ok-ini">✓ Iniciar</button>
+      </div>
+      <div id="err-ini" style="color:#b71c1c;font-size:0.7rem;margin-top:6px;display:none"></div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL FINALIZAR ===== -->
+  <div class="overlay" id="ov-finalizar">
+    <div class="modal">
+      <h2>■ Encerrar Votação</h2>
+      <label>Senha do Administrador</label>
+      <input type="password" id="inp-senha-fin" placeholder="••••••">
+      <div class="linha-btns">
+        <button class="bm bm-cancel" id="btn-cancel-fin">Cancelar</button>
+        <button class="bm bm-ok" id="btn-ok-fin">Encerrar e Ver Resultado</button>
+      </div>
+      <div id="err-fin" style="color:#b71c1c;font-size:0.7rem;margin-top:6px;display:none"></div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL BOLETIM ===== -->
+  <div class="overlay" id="ov-boletim">
+    <div class="modal" style="max-width:480px">
+      <div id="bu-content"></div>
+      <div class="linha-btns">
+        <button class="bm bm-cancel" id="btn-fechar-bu">Fechar</button>
+        <button class="bm bm-ok" onclick="window.print()">🖨 Imprimir</button>
       </div>
     </div>
-
-  </div><!-- /corpo-urna -->
-
-  <!-- rodapé estética (ranhuras) -->
-  <div id="rodape-urna">
-    <div class="ranhura"></div><div class="ranhura"></div><div class="ranhura"></div>
-    <div class="ranhura"></div><div class="ranhura"></div><div class="ranhura"></div>
-    <div class="ranhura"></div><div class="ranhura"></div>
   </div>
-</div><!-- /urna -->
 
-<!-- flash voto confirmado -->
-<div id="flash-voto">
-  <div class="ico">✅</div>
-  <div class="msg">VOTO COMPUTADO</div>
-</div>
-
-<!-- ===== MODAL INICIAR ===== -->
-<div class="overlay" id="ov-iniciar">
-<div class="modal modal-cfg">
-  <h2>▶ Iniciar Votação</h2>
-  <div class="cfg-topo">
-    <div><label>Senha do Administrador</label>
-    <input type="password" id="inp-senha-ini" placeholder="••••••"></div>
-    <div><label>Nome do Evento (aparece no topo)</label>
-    <input type="text" id="inp-titulo" value="Rei e Rainha do Milho 2025"></div>
-    <div><label>Dígitos por número (2 a 5)</label>
-    <input type="number" id="inp-digitos" value="2" min="2" max="5"></div>
+  <!-- ===== MODAL LIBERAR PRÓXIMO ===== -->
+  <div class="overlay" id="ov-liberar">
+    <div class="modal">
+      <h2>🔓 Liberar Próximo Eleitor</h2>
+      <label>Senha Master</label>
+      <input type="password" id="inp-senha-lib" placeholder="••••••">
+      <div class="linha-btns">
+        <button class="bm bm-cancel" id="btn-cancel-lib">Cancelar</button>
+        <button class="bm bm-ok" id="btn-ok-lib">Liberar</button>
+      </div>
+      <div id="err-lib" style="color:#b71c1c;font-size:0.7rem;margin-top:6px;display:none"></div>
+    </div>
   </div>
-  <hr style="margin-top:14px;border-color:#dde">
-  <div id="cargos-form" class="cargos-grid"></div>
-  <button class="bm bm-ok" id="btn-add-cargo" style="width:100%;margin-top:10px">+ Adicionar Cargo</button>
-  <div class="linha-btns">
-    <button class="bm bm-cancel" id="btn-cancel-ini">Cancelar</button>
-    <button class="bm bm-ok" id="btn-ok-ini">✓ Iniciar</button>
+
+  <!-- ===== MODAL CANDIDATOS ===== -->
+  <div class="overlay" id="ov-candidatos">
+    <div class="modal" style="max-width:520px">
+      <h2>👥 Candidatos</h2>
+      <div id="lista-candidatos"></div>
+      <div class="linha-btns"><button class="bm bm-cancel" id="btn-fechar-cand">Fechar</button></div>
+    </div>
   </div>
-  <div id="err-ini" style="color:#b71c1c;font-size:0.7rem;margin-top:6px;display:none"></div>
-</div>
-</div>
 
-<!-- ===== MODAL FINALIZAR ===== -->
-<div class="overlay" id="ov-finalizar">
-<div class="modal">
-  <h2>■ Encerrar Votação</h2>
-  <label>Senha do Administrador</label>
-  <input type="password" id="inp-senha-fin" placeholder="••••••">
-  <div class="linha-btns">
-    <button class="bm bm-cancel" id="btn-cancel-fin">Cancelar</button>
-    <button class="bm bm-ok" id="btn-ok-fin">Encerrar e Ver Resultado</button>
-  </div>
-  <div id="err-fin" style="color:#b71c1c;font-size:0.7rem;margin-top:6px;display:none"></div>
-</div>
-</div>
-
-<!-- ===== MODAL BOLETIM ===== -->
-<div class="overlay" id="ov-boletim">
-<div class="modal" style="max-width:480px">
-  <div id="bu-content"></div>
-  <div class="linha-btns">
-    <button class="bm bm-cancel" id="btn-fechar-bu">Fechar</button>
-    <button class="bm bm-ok" onclick="window.print()">🖨 Imprimir</button>
-  </div>
-</div>
-</div>
-
-<!-- ===== MODAL LIBERAR PRÓXIMO ===== -->
-<div class="overlay" id="ov-liberar">
-<div class="modal">
-  <h2>🔓 Liberar Próximo Eleitor</h2>
-  <label>Senha Master</label>
-  <input type="password" id="inp-senha-lib" placeholder="••••••">
-  <div class="linha-btns">
-    <button class="bm bm-cancel" id="btn-cancel-lib">Cancelar</button>
-    <button class="bm bm-ok" id="btn-ok-lib">Liberar</button>
-  </div>
-  <div id="err-lib" style="color:#b71c1c;font-size:0.7rem;margin-top:6px;display:none"></div>
-</div>
-</div>
-
-<!-- ===== MODAL CANDIDATOS ===== -->
-<div class="overlay" id="ov-candidatos">
-<div class="modal" style="max-width:520px">
-  <h2>👥 Candidatos</h2>
-  <div id="lista-candidatos"></div>
-  <div class="linha-btns"><button class="bm bm-cancel" id="btn-fechar-cand">Fechar</button></div>
-</div>
-</div>
-
-<script src="js/urna.js"></script>
+  <script src="js/urna.js"></script>
 </body>
+
 </html>
