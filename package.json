@@ -2,7 +2,7 @@
   "name": "urna-eletronica",
   "version": "1.0.0",
   "description": "Réplica da urna eletrônica brasileira para eventos e festas",
-  "main": "main.js",
+  "main": "electron/main.js",
   "author": "Otávio Augusto",
   "license": "MIT",
   "scripts": {
@@ -22,22 +22,20 @@
       "output": "dist"
     },
     "files": [
-      "main.js",
-      "index.html",
-      "preload.js",
-      "mesario.html"
+      "electron/**/*",
+      "src/**/*"
     ],
     "win": {
       "target": "nsis",
-      "icon": "icon.ico"
+      "icon": "build/icon.ico"
     },
     "mac": {
       "target": "dmg",
-      "icon": "icon.icns"
+      "icon": "build/icon.icns"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "icon.png"
+      "icon": "build/icon.png"
     },
     "nsis": {
       "oneClick": true,

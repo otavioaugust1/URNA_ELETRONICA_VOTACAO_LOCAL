@@ -5,6 +5,12 @@ const os = require('os');
 const http = require('http');
 
 const PORTA = 3737;
+const SRC = path.join(__dirname, '..', 'src');
+const TIPOS = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'application/javascript; charset=utf-8',
+};
 
 // Mantém referência global para evitar garbage collection
 let mainWindow;
@@ -21,7 +27,7 @@ function createWindow() {
     minWidth: 720,
     minHeight: 560,
     title: 'Urna Eletrônica 🌽',
-    icon: path.join(__dirname, 'icon.png'),
+    icon: path.join(__dirname, '..', 'build', 'icon.png'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -33,7 +39,7 @@ function createWindow() {
   });
 
   mainWindow.maximize();
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadFile(path.join(SRC, 'index.html'));
 
   // Remove menu padrão (File/Edit/View…)
   Menu.setApplicationMenu(null);
@@ -59,10 +65,13 @@ function json(res, code, obj) {
 
 function iniciarServidor() {
   const server = http.createServer((req, res) => {
-    if (req.method === 'GET' && (req.url === '/' || req.url === '/mesario.html')) {
-      fs.readFile(path.join(__dirname, 'mesario.html'), (err, data) => {
-        if (err) return json(res, 500, { erro: 'mesario.html não encontrado' });
-        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    // arquivos estáticos do painel do mesário (somente os necessários)
+    const ARQUIVOS = { '/': 'mesario.html', '/mesario.html': 'mesario.html', '/css/mesario.css': 'css/mesario.css', '/js/mesario.js': 'js/mesario.js' };
+    if (req.method === 'GET' && ARQUIVOS[req.url]) {
+      const arq = ARQUIVOS[req.url];
+      fs.readFile(path.join(SRC, arq), (err, data) => {
+        if (err) return json(res, 500, { erro: arq + ' não encontrado' });
+        res.writeHead(200, { 'Content-Type': TIPOS[path.extname(arq)] });
         res.end(data);
       });
     } else if (req.method === 'GET' && req.url === '/enderecos') {

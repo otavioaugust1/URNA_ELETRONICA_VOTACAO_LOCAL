@@ -10,7 +10,7 @@ Instale o **Node.js** (versão 18 ou superior): https://nodejs.org/pt
 
 ## Passo a passo
 
-Rode os comandos na pasta raiz do projeto, onde estão o `package.json` e o `main.js`.
+Rode os comandos na pasta raiz do projeto, onde está o `package.json`.
 
 ```bash
 # 1. Instale as dependências (só na primeira vez)
@@ -33,23 +33,21 @@ O arquivo gerado fica na pasta `dist/`.
 
 ## Arquivos incluídos no build
 
-| Arquivo | Função |
+| Pasta | Conteúdo |
 |---|---|
-| `main.js` | Janela da urna (maximizada) e servidor do painel do mesário |
-| `preload.js` | Ponte segura entre a urna e o Electron |
-| `index.html` | A urna |
-| `mesario.html` | Painel do mesário |
+| `electron/` | `main.js` (janela da urna e servidor do mesário) e `preload.js` |
+| `src/` | A urna e o painel do mesário (HTML, CSS e JS) |
 
-Se você renomear ou adicionar arquivos, atualize a lista `build.files` do `package.json`.
+Se você mudar a estrutura de pastas, atualize `main` e `build.files` no `package.json`.
 
 ---
 
 ## Ícone personalizado (opcional)
 
-Coloque na pasta raiz:
+Coloque na pasta `build/`:
 - `icon.ico` — Windows
 - `icon.icns` — macOS
-- `icon.png` — Linux (256×256 px)
+- `icon.png` — Linux e janela do app (256×256 px)
 
 ---
 

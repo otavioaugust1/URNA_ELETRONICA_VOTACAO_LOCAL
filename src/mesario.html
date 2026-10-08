@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do Mesário</title>
+<link rel="stylesheet" href="css/mesario.css">
+</head>
+<body>
+<div class="card">
+  <div class="topo"><small>Justiça Eleitoral</small>🧑‍⚖️ PAINEL DO MESÁRIO <span id="evento"></span></div>
+  <div class="corpo">
+    <div id="status" class="status st-off">Aguardando conexão com a urna…</div>
+    <div class="total" id="total"></div>
+    <label for="senha">Senha master</label>
+    <input type="password" id="senha" placeholder="••••••" autofocus>
+    <button id="btn" disabled>🔓 Liberar próximo eleitor</button>
+    <div id="msg"></div>
+    <div id="rede" style="margin-top:18px;font-size:.72rem;color:#555;text-align:center;display:none"></div>
+  </div>
+</div>
+<script src="js/mesario.js"></script>
+</body>
+</html>

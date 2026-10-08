@@ -22,7 +22,7 @@ Um sistema de votação inspirado na urna eletrônica brasileira: tela à esquer
 | 🙋 Um voto por eleitor | O eleitor vota em todos os cargos em sequência. Ao terminar, a urna **trava** com a tela "FIM" |
 | 🔓 Liberação pelo mesário | Para o próximo eleitor votar, o administrador digita a **senha master** em um pop-up (botão na tela ou Enter) |
 | ⚪ Branco e ⚫ Nulo | BRANCO mostra "VOTO EM BRANCO". Número inexistente mostra "VOTO NULO". Os dois exigem **CONFIRMA** para registrar |
-| 🧑‍⚖️ Painel do mesário | Página `mesario.html` para liberar o próximo eleitor. No app desktop funciona **em outro computador da mesma rede** |
+| 🧑‍⚖️ Painel do mesário | Página `src/mesario.html` para liberar o próximo eleitor. No app desktop funciona **em outro computador da mesma rede** |
 | 👥 Lista de candidatos | Botão **Candidatos** no topo mostra cargos, fotos, números e nomes |
 | ⚙️ Configuração em tela cheia | A tela de iniciar a votação é maximizada, com cargos e candidatos em colunas, para facilitar a digitação |
 | 📷 Fotos | Upload de foto do titular e do vice/chapa |
@@ -30,7 +30,7 @@ Um sistema de votação inspirado na urna eletrônica brasileira: tela à esquer
 | 🔀 Anonimato | Votos embaralhados (Fisher-Yates) a cada registro |
 | 📊 Resultado | Boletim final com votos por candidato, % de votos válidos, brancos, nulos e vencedor |
 | 🖨️ Impressão A4 | Imprime **só o boletim** (sem a urna nem o fundo), em A4 retrato, com a mesma fonte da tela |
-| 🌐 Sem dependências | A urna é um único `index.html` e funciona offline em qualquer navegador |
+| 🌐 Sem dependências | A urna é só HTML, CSS e JS puros e funciona offline em qualquer navegador |
 | 💻 App desktop | Versão `.exe`, `.dmg` ou `.AppImage` via Electron |
 
 ---
@@ -73,10 +73,10 @@ Notas: o firewall do computador da urna precisa permitir a porta **3737**. A sen
 ## 🚀 Como usar
 
 ### Opção 1 — Arquivo local
-Abra `index.html` no navegador. Funciona offline. O navegador só libera o som após o primeiro clique ou tecla.
+Abra `src/index.html` no navegador. Funciona offline. O navegador só libera o som após o primeiro clique ou tecla.
 
 ### Opção 2 — GitHub Pages
-**Settings → Pages → Branch: main → / (root)**.
+**Settings → Pages → Branch: main → / (root)** e acesse `/src/`. Para abrir direto na raiz, mova o conteúdo de `src/` para uma pasta `docs/` e escolha essa pasta.
 
 ### Opção 3 — App desktop
 
@@ -89,7 +89,7 @@ npm run build-mac      # macOS (.dmg)
 npm run build-linux    # Linux (.AppImage)
 ```
 
-O executável fica em `dist/`. Mais detalhes em [COMO_GERAR_EXE.md](COMO_GERAR_EXE.md).
+O executável fica em `dist/`. Mais detalhes em [docs/COMO_GERAR_EXE.md](docs/COMO_GERAR_EXE.md).
 
 ---
 
@@ -103,7 +103,7 @@ A mesma senha vale para iniciar, finalizar e liberar o próximo eleitor. Padrão
 131313
 ```
 
-Para trocar, edite no `index.html`:
+Para trocar, edite em `src/js/urna.js`:
 
 ```js
 const SENHA = "131313";
@@ -127,12 +127,23 @@ No resultado, clique em **🖨 Imprimir** e escolha papel **A4**. A página sai 
 ## 📁 Estrutura
 
 ```
-├── index.html          ← app completo
-├── main.js             ← processo principal do Electron (janela maximizada e servidor do mesário)
-├── preload.js          ← ponte segura entre a urna e o Electron
-├── mesario.html        ← painel do mesário
-├── package.json        ← scripts e configuração de build
-├── COMO_GERAR_EXE.md   ← guia para gerar o executável
+├── src/                      ← a urna (HTML, CSS e JS separados)
+│   ├── index.html            ← tela da urna
+│   ├── mesario.html          ← painel do mesário
+│   ├── css/
+│   │   ├── urna.css
+│   │   └── mesario.css
+│   └── js/
+│       ├── urna.js           ← lógica da urna, sons, boletim e impressão
+│       └── mesario.js        ← lógica do painel do mesário
+├── electron/                 ← app desktop
+│   ├── main.js               ← janela maximizada e servidor do mesário
+│   └── preload.js            ← ponte segura entre a urna e o Electron
+├── build/                    ← ícones do instalador (opcional)
+├── docs/
+│   └── COMO_GERAR_EXE.md     ← guia para gerar o executável
+├── package.json
+├── LICENSE
 └── README.md
 ```
 
